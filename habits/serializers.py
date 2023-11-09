@@ -7,4 +7,4 @@ class HabitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Habit
-        fields = ('user', 'operation',)
+        fields = '__all__'

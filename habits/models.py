@@ -26,7 +26,7 @@ class Habit(models.Model):
     is_public = models.BooleanField(default=False, verbose_name='Public habit')
 
     def __str__(self):
-        return f'{self.operation}'
+        return f'{self.operation, related_habit}'
 
     class Meta:
         verbose_name = 'Habit'
