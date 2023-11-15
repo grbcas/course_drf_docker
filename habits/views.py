@@ -6,10 +6,11 @@ from django.db.models import Q
 from habits.models import Habit
 from habits.permissions import IsOwner
 from habits.serializers import HabitSerializer
+from rest_framework.generics import ListAPIView
 
 
 class HabitPageNumberPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 5
     page_size_query_param = 'page size'
     max_page_size = 10
 
@@ -21,7 +22,11 @@ class HabitViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Filters personal and public habits
+        Get personal and public habits or only public habits with key 'is_public=true'
         """
         user = self.request.user
-        return Habit.objects.filter(Q(user=user) | Q(is_public=True)).order_by('id')
+
+        if self.request.query_params['is_public']:  # http://127.0.0.1:8000/api/habits/?is_public=true
+            return Habit.objects.filter(is_public=True).order_by('id')
+        else:
+            return Habit.objects.filter(Q(user=user) | Q(is_public=True)).order_by('id')
