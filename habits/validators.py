@@ -30,6 +30,7 @@ class HabitRelatedIsPleasant:
         except ObjectDoesNotExist:
             print('habits.models.Habit.DoesNotExist: Habit matching query does not exist.')
 
+
 class HabitRewardOrRelatedIsPleasant:
     """ Check if simultaneous selection is excluded """
 
