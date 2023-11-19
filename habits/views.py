@@ -26,7 +26,10 @@ class HabitViewSet(viewsets.ModelViewSet):
         """
         user = self.request.user
 
-        if self.request.query_params['is_public']:  # http://127.0.0.1:8000/api/habits/?is_public=true
+        if self.request.query_params:  # http://127.0.0.1:8000/api/habits/?is_public=true
             return Habit.objects.filter(is_public=True).order_by('id')
         else:
             return Habit.objects.filter(Q(user=user) | Q(is_public=True)).order_by('id')
+
+    # def perform_create(self, serializer):
+    #     serializer.save()

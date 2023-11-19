@@ -1,22 +1,13 @@
 from rest_framework import serializers, request
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.validators import ValidationError
 from datetime import timedelta
 
 from habits.models import Habit
 
 
-class HabitCheck:
-
-    def __call__(self, value):
-        print(value)
-
-
 class HabitDuration:
     """ Check if the habit execution time is no more than 120 seconds. """
-
-    def __init__(self, queryset):
-        self.queryset = queryset
-        print('HabitDuration', self.queryset)
 
     def __call__(self, value):
         print(f'value ===== {value=}')
@@ -27,23 +18,20 @@ class HabitDuration:
 
 class HabitRelatedIsPleasant:
     """ Check if the related habit should be pleasant. """
-    def __init__(self, queryset):
-        self.queryset = queryset
-        print('HabitRelatedIsPleasant', self.queryset)
 
     def __call__(self, value):
-        is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value['related_habit'])
+        try:
+            is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value['related_habit'])
 
-        if value['related_habit'] and not is_pleasant:
-            message = 'The related habit should be pleasant.'
-            raise ValidationError(message)
+            if value['related_habit'] and not is_pleasant:
+                message = 'The related habit should be pleasant.'
+                raise ValidationError(message)
 
+        except ObjectDoesNotExist:
+            print('habits.models.Habit.DoesNotExist: Habit matching query does not exist.')
 
 class HabitRewardOrRelatedIsPleasant:
     """ Check if simultaneous selection is excluded """
-    def __init__(self, queryset):
-        self.queryset = queryset
-        print('HabitRewardOrRelatedIsPleasant', self.queryset)
 
     def __call__(self, value):
         # is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value['related_habit'])
@@ -59,9 +47,6 @@ class HabitRewardOrRelatedIsPleasant:
 
 class HabitRelatedOrIsPleasant:
     """ checking a pleasant habit can't have a reward or a related habit """
-    def __init__(self, queryset):
-        self.queryset = queryset
-        print(self.queryset)
 
     def __call__(self, value):
         is_pleasant = value['is_pleasant']

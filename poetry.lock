@@ -378,6 +378,17 @@ files = [
 ]
 
 [[package]]
+name = "decorators"
+version = "2.0.7"
+description = "Quickly create flexible Python decorators"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "decorators-2.0.7.tar.gz", hash = "sha256:9cf26202d6170a5cdca8a9cf6cd4b467c10601d4a9076470bceb9d282a5fa28a"},
+]
+
+[[package]]
 name = "django"
 version = "4.2.7"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -664,6 +675,17 @@ sqlalchemy = ["sqlalchemy (>=1.4.48,<2.1)"]
 sqs = ["boto3 (>=1.26.143)", "pycurl (>=7.43.0.5)", "urllib3 (>=1.26.16)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=2.8.0)"]
+
+[[package]]
+name = "logging"
+version = "0.4.9.6"
+description = "A logging module for Python"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "logging-0.4.9.6.tar.gz", hash = "sha256:26f6b50773f085042d301085bd1bf5d9f3735704db9f37c1ce6d8b85c38f2417"},
+]
 
 [[package]]
 name = "matplotlib-inline"
@@ -1271,4 +1293,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "47c7f6230d4fb216928cfe35acacc00be4fefc1580509a8147d8b72765ebbca6"
+content-hash = "bd68c20d01fe4db29ca9fac5503f6fdb12708079f2a48cab5002fd46ff070761"

@@ -1,45 +1,26 @@
+
+import logging
+from django_celery_beat.models import PeriodicTask
+from celery.schedules import crontab
+
 from config.celery import app
 from .models import Habit
 from .services.telegram import telegram_bot_message
 
-from celery.schedules import crontab
+# PeriodicTask.objects.update(last_run_at=None)
 
 
-@app.task
 def task_message(message, chat_id):
+    logging.info(">>>>>>>>>task_message uid 559773959")
     telegram_bot_message(message=message, chat_id=chat_id)
-
-
-@app.task
-def test_print(arg):
-    print(arg)
-
-
-@app.task
-def check():
-    print('I am checking your stuff')
+    telegram_bot_message("task_message Telegram bot 559773959", 559773959)
 
 
 app.conf.beat_schedule = {
-
     'test_beat_schedule': {
-        'task': 'tasks.task_message',
+        'task': 'task_message',
         'schedule': crontab(minute='*/1'),
-        'args': ('Testing Telegram bot', 559773959),
+        'args': ('test_beat_schedule bot 559773959', 559773959),
     },
-
-    'test_test_print': {
-        'task': 'tasks.test_print',
-        'schedule': crontab(minute='*/1'),
-        'args': ('tasks.test_print',),
-    },
-
 }
 app.conf.timezone = "Europe/Moscow"
-
-# app.conf.beat_schedule = {
-#     'run-me-every-ten-seconds': {
-#         'task': 'tasks.check',
-#         'schedule': 10.0
-#     }
-# }

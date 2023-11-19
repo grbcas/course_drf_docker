@@ -15,19 +15,19 @@ class HabitSerializer(serializers.ModelSerializer):
 
         validators = [
             HabitDuration(
-                queryset=Habit.objects.values_list('duration'),
+                # queryset=Habit.objects.values_list('duration'),
             ),
 
             HabitRelatedIsPleasant(
-                queryset=Habit.objects.values_list('related_habit', 'habit__is_pleasant'),
+                # queryset=Habit.objects.values_list('related_habit', 'habit__is_pleasant'),
             ),
 
             HabitRewardOrRelatedIsPleasant(
-                queryset=Habit.objects.values_list('related_habit', 'reward'),
+                # queryset=Habit.objects.values_list('related_habit', 'reward'),
             ),
 
             HabitRelatedOrIsPleasant(
-                queryset=Habit.objects.values_list('is_pleasant', 'related_habit', 'reward'),
+                # queryset=Habit.objects.values_list('is_pleasant', 'related_habit', 'reward'),
             )
 
         ]
