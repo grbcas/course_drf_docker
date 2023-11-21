@@ -1,8 +1,10 @@
 import requests
-from os import getenv
+import os
+from dotenv import load_dotenv
 
-TELEGRAM_TOKEN = '6542037151:AAFvnsJcpvpVGiYxm4gAeeJl2k4p9EAyYtg'
-TELEGRAM_MAIN_URL = 'https://api.telegram.org/bot'
+load_dotenv()
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_MAIN_URL = os.getenv('TELEGRAM_MAIN_URL')
 
 
 def telegram_bot_message(message, chat_id):
@@ -13,7 +15,7 @@ def telegram_bot_message(message, chat_id):
 
 
 if __name__ == '__main__':
-    # test = telegram_bot_message("Testing Telegram bot 559773959", 5194882396)
+    # load_dotenv()
+    # test = telegram_bot_message("Testing Telegram bot 559773959")
     test = telegram_bot_message("Testing Telegram bot 559773959", 559773959)
 
-    print(test)

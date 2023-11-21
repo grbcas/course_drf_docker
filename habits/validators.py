@@ -10,7 +10,7 @@ class HabitDuration:
     """ Check if the habit execution time is no more than 120 seconds. """
 
     def __call__(self, value):
-        print(f'value ===== {value=}')
+        # print(f'value ===== {value=}')
         if value['duration'] > timedelta(seconds=120):
             message = 'The execution time should be no more than 120 seconds.'
             raise ValidationError(message)
@@ -40,7 +40,7 @@ class HabitRewardOrRelatedIsPleasant:
 
         related_habit = value['related_habit']
         reward = value['reward']
-        print(related_habit, reward)
+        # print(related_habit, reward)
         if related_habit and reward:
             message = 'Simultaneous selection of the reward and related pleasant habit is excluded'
             raise ValidationError(message)
@@ -53,7 +53,7 @@ class HabitRelatedOrIsPleasant:
         is_pleasant = value['is_pleasant']
         related_habit = value['related_habit']
         reward = value['reward']
-        print(is_pleasant, related_habit, reward)
+        # print(is_pleasant, related_habit, reward)
 
         if is_pleasant and (related_habit or reward):
             message = 'A pleasant habit can\'t have a reward or a related habit'

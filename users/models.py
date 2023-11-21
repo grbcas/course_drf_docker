@@ -15,12 +15,12 @@ class User(AbstractUser):
         max_length=150,
         unique=True,
         validators=[TelegramNicknameValidator()],
-        verbose_name='Unique telegram uid'
+        verbose_name='Unique telegram username'
     )
 
-    telegram_uid = models.PositiveIntegerField(unique=True,
-                                               verbose_name='Unique telegram chat id',
-                                               **NULLABLE)
+    telegram_uid = models.IntegerField(unique=True,
+                                       verbose_name='Unique telegram chat id',
+                                       **NULLABLE)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['telegram_username']
+    REQUIRED_FIELDS = ['telegram_uid']

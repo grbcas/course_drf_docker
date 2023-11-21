@@ -1,7 +1,10 @@
+from django_celery_beat.models import PeriodicTask, CrontabSchedule, PeriodicTasks
+from pytz import timezone
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
+from rest_framework.utils import json
 
 from habits.models import Habit
 from habits.permissions import IsOwner
@@ -31,5 +34,35 @@ class HabitViewSet(viewsets.ModelViewSet):
         else:
             return Habit.objects.filter(Q(user=user) | Q(is_public=True)).order_by('id')
 
-    # def perform_create(self, serializer):
-    #     serializer.save()
+    def perform_create(self, serializer):
+
+        instance = serializer.save()
+
+        crontab, _ = CrontabSchedule.objects.update_or_create(
+            minute=instance.task_crontab['minute'],
+            hour=instance.task_crontab['hour'],
+            day_of_week="*",
+            day_of_month='*',
+            month_of_year='*',
+            timezone=timezone("Europe/Moscow"),
+        )
+
+        task = PeriodicTask.objects.create(
+            crontab=crontab,
+            name=f"habit: {instance.id} {instance.operation}",
+            task="habits.tasks.task_send_tg",
+            kwargs=json.dumps(
+                {
+                    "habit_id": instance.id,
+                }
+            ),
+        )
+
+        print('instance.task_crontab', instance.task_crontab)
+        print('instance.task', instance.task)
+        print('task', task)
+
+        instance.task = task
+        instance.user = self.request.user
+
+        instance.save()
