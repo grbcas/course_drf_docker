@@ -17,5 +17,5 @@ def telegram_bot_message(message, chat_id):
 if __name__ == '__main__':
     # load_dotenv()
     # test = telegram_bot_message("Testing Telegram bot 559773959")
-    test = telegram_bot_message("Testing Telegram bot 559773959", 559773959)
+    test = telegram_bot_message("Testing Telegram bot 559773959", '559773959')
 

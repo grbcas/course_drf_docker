@@ -18,9 +18,9 @@ class User(AbstractUser):
         verbose_name='Unique telegram username'
     )
 
-    telegram_uid = models.IntegerField(unique=True,
-                                       verbose_name='Unique telegram chat id',
-                                       **NULLABLE)
+    telegram_uid = models.CharField(max_length=100, unique=True,
+                                    verbose_name='Unique telegram chat id',
+                                    **NULLABLE)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['telegram_uid']
