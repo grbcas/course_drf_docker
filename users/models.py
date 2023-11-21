@@ -18,9 +18,9 @@ class User(AbstractUser):
         verbose_name='Unique telegram uid'
     )
 
-    telegram_uid = models.PositiveIntegerField(unique=True,
-                                               verbose_name='Unique telegram chat id',
-                                               **NULLABLE)
+    telegram_uid = models.IntegerField(unique=True,
+                                       verbose_name='Unique telegram chat id',
+                                       **NULLABLE)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['telegram_username']
