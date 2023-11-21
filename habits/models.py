@@ -13,7 +13,7 @@ class Habit(models.Model):
 
     SCHEDULE = [(1, 'mon'), (2, 'tue'), (3, 'wed'), (4, 'thu'), (5, 'fri'), (6, 'sat'), (7, 'sun')]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', **NULLABLE)
     place = models.CharField(max_length=200, verbose_name='Place', **NULLABLE)
     operation = models.CharField(max_length=200, verbose_name='Operation')
 
