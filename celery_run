@@ -1,0 +1,22 @@
+
+
+celery -A config worker --loglevel=info -P gevent --concurrency 1 -E
+celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler --max-interval 10
+
+
+
+celery -A config worker  -E --loglevel=info
+
+celery -A config beat --loglevel=info
+
+# -P eventlet
+
+celery -A config worker --loglevel=info -E
+celery -A config beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+
+celery -A config worker --loglevel=info -P eventlet -E
+
+celery -A <app> worker --loglevel=info -P gevent
+
+celery -A <app> worker --loglevel=info -P solo

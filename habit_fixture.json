@@ -1,0 +1,32 @@
+[
+  {
+    "model": "habits.habit",
+    "pk": 1,
+    "fields": {
+      "user": 12,
+      "place": "place1",
+      "operation": "operation1",
+      "schedule": 1,
+      "related_habit": null,
+      "duration": "00:00:02",
+      "reward": "some",
+      "is_pleasant": false,
+      "is_public": true
+    }
+  },
+  {
+    "model": "habits.habit",
+    "pk": 7,
+    "fields": {
+      "user": 1,
+      "place": "place1",
+      "operation": "oper1",
+      "schedule": 1,
+      "related_habit": null,
+      "duration": "00:00:01",
+      "reward": null,
+      "is_pleasant": false,
+      "is_public": false
+    }
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "model": "habits.habit",
+    "pk": 69,
+    "fields": {
+      "user": 2,
+      "place": "place1",
+      "operation": "operation1",
+      "interval": 10,
+      "task": 34,
+      "related_habit": null,
+      "duration": "00:00:02",
+      "reward": null,
+      "is_pleasant": true,
+      "is_public": true
+    }
+  },
+  {
+    "model": "habits.habit",
+    "pk": 70,
+    "fields": {
+      "user": 12,
+      "place": "place2",
+      "operation": "operation2",
+      "interval": 10,
+      "task": 35,
+      "related_habit": null,
+      "duration": "00:00:02",
+      "reward": "null",
+      "is_pleasant": false,
+      "is_public": true
+    }
+  },
+  {
+    "model": "habits.habit",
+    "pk": 71,
+    "fields": {
+      "user": 12,
+      "place": "place3",
+      "operation": "operation3",
+      "interval": 10,
+      "task": 36,
+      "related_habit": 69,
+      "duration": "00:00:02",
+      "reward": null,
+      "is_pleasant": false,
+      "is_public": true
+    }
+  },
+  {
+    "model": "habits.habit",
+    "pk": 72,
+    "fields": {
+      "user": 2,
+      "place": "place4",
+      "operation": "operation4",
+      "interval": 10,
+      "task": 37,
+      "related_habit": null,
+      "duration": "00:00:02",
+      "reward": null,
+      "is_pleasant": true,
+      "is_public": true
+    }
+  }
+]
