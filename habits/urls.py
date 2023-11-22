@@ -7,10 +7,10 @@ app_name = HabitsConfig.name
 
 router = routers.SimpleRouter()
 
-router.register(r'habits', viewset=HabitViewSet, basename='habits')
+router.register(r'habits', viewset=HabitViewSet, basename='habits_api')
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 
-    # path('public_habits/', HabitAPIView.as_view(), name='public_habits')
+    # path('api/', include((router.urls, 'habits'), namespace='habits_api')),
 ]
