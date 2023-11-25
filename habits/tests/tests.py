@@ -22,8 +22,6 @@ class HabitAPITestCase(APITestCase):
             telegram_uid='5194882396',
         )
 
-
-
         data = [
             {
                 "count": 1,
@@ -41,26 +39,22 @@ class HabitAPITestCase(APITestCase):
             }
         ]
 
-        # self.habit = Habit.objects.create(
-        #         place="place",
-        #         operation="operation_2",
-        #         schedule=3,
-        #         duration="00:00:03",
-        #         reward=None,
-        #         is_pleasant=True,
-        #         is_public=None,
-        #         related_habit=None,
-        #         task_crontab=
-        #             {
-        #                 "minute": "*/1",
-        #                 "hour": "*"
-        #             }
-        # )
+        self.habit = Habit.objects.create(
+                place="place",
+                operation="operation_2",
+                schedule=3,
+                duration="00:00:03",
+                reward=None,
+                is_pleasant=True,
+                is_public=True,
+                related_habit=None,
+                task_crontab={"minute": "*/1", "hour": "*"}
+        )
 
         self.client.force_authenticate(user=self.user)
 
     def test_get_habits(self):
-        response = self.client.get(reverse('habits:habits_api'))  # ссылка для
+        response = self.client.get(reverse('habits:habits_api-list'))  # ссылка для
 
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK
@@ -74,10 +68,20 @@ class HabitAPITestCase(APITestCase):
                              "results": [
                                  {
                                      "id": 1,
-                                     "name": "test_lesson",
-                                     "description": None,
-                                     "course": 1,
-                                     "link_video": None
+                                     "place": "place",
+                                     "operation": "operation_2",
+                                     "schedule": 3,
+                                     "task_crontab": {
+                                         "hour": "*",
+                                         "minute": "*/1"
+                                     },
+                                     "duration": "00:00:03",
+                                     "reward": None,
+                                     "is_pleasant": True,
+                                     "is_public": True,
+                                     "user": 1,
+                                     "task": 1,
+                                     "related_habit": None
                                  }
                              ]
                          }

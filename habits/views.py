@@ -39,11 +39,11 @@ class HabitViewSet(viewsets.ModelViewSet):
         instance = serializer.save()
 
         crontab, _ = CrontabSchedule.objects.update_or_create(
-            minute=instance.task_crontab['minute'],
-            hour=instance.task_crontab['hour'],
-            day_of_week="*",
-            day_of_month='*',
-            month_of_year='*',
+            minute=instance.task_crontab['minute'] if instance.task_crontab['hour'] else '*',
+            hour=instance.task_crontab['hour'] if instance.task_crontab['hour'] else '*',
+            day_of_week=instance.task_crontab['day_of_week'] if instance.task_crontab['day_of_week'] else '*',
+            day_of_month=instance.task_crontab['day_of_month'] if instance.task_crontab['day_of_month'] else '*',
+            month_of_year=instance.task_crontab['month_of_year'] if instance.task_crontab['month_of_year'] else '*',
             timezone=timezone("Europe/Moscow"),
         )
 

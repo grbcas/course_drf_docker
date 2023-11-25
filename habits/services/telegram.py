@@ -3,12 +3,9 @@ import os
 from dotenv import load_dotenv
 import telebot
 
-
-
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_MAIN_URL = os.getenv('TELEGRAM_MAIN_URL')
-
 
 
 def telegram_bot_message(message, chat_id):
@@ -24,6 +21,5 @@ def telebot_send(message, chat_id):
 
 
 if __name__ == '__main__':
-    # test = telegram_bot_message("Testing Telegram bot 559773959")
-    # test = telegram_bot_message("Manual test Telegram bot 559773959", '559773959')
-    test = telebot_send("Manual test Telegram bot 559773959", '559773959')
+    # test = telegram_bot_message("Manual test Telegram bot bpt 5194882396", '5194882396')
+    telebot_send("Manual test Telegram bot 559773959", '559773959')

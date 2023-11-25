@@ -417,6 +417,24 @@ files = [
 toml = ["tomli"]
 
 [[package]]
+name = "cron-converter"
+version = "1.0.2"
+description = "Cron string parser and scheduler for Python"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "cron-converter-1.0.2.tar.gz", hash = "sha256:068b91f3b8f21941e564c4af25c7e3ca5c3944607790d02e4b97109a1e200ee6"},
+    {file = "cron_converter-1.0.2-py3-none-any.whl", hash = "sha256:708a83824d383fd4ecd55cee1d7f3c3f630297fdd8062a2adcbce1d352d5c3b3"},
+]
+
+[package.dependencies]
+python-dateutil = "*"
+
+[package.extras]
+test = ["unittest"]
+
+[[package]]
 name = "cron-descriptor"
 version = "1.4.0"
 description = "A Python library that converts cron expressions into human readable strings."
@@ -1578,4 +1596,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "212490f695644e1bc00d47e969262259878b65b401f906e81fd14940d2d34be8"
+content-hash = "a1a26d351e7df2ce1a37eabff3e59680a2d5f2c3ec50b0f782c9666f4d2bcdba"

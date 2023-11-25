@@ -1,8 +1,7 @@
-from rest_framework import serializers, request
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.validators import ValidationError
-from datetime import timedelta
-
+from datetime import datetime, timedelta
+from cron_converter import Cron
 from habits.models import Habit
 
 
@@ -57,4 +56,32 @@ class HabitRelatedOrIsPleasant:
 
         if is_pleasant and (related_habit or reward):
             message = 'A pleasant habit can\'t have a reward or a related habit'
+            raise ValidationError(message)
+
+
+class FrequencyLessOneWeek:
+    """ checking frequency of the habit """
+
+    def __call__(self, value):
+        crontab = value['task_crontab']
+        print('crontab', crontab)
+        crontab_str = ' '.join(crontab.values())
+        print('crontab_str', crontab_str)
+        cron_instance = Cron()
+        # Parse a string to init a schedule
+        cron_instance.from_string(crontab_str)
+
+        # Raw datetime without timezone info (not aware)
+        reference = datetime.now()
+        # Get the iterator, initialised to now
+        schedule = cron_instance.schedule(reference)
+
+        # Calls to .next()
+        next_time = schedule.next()
+
+        delta_time = next_time - reference
+        # print(next_time, 'delta_time = ', delta_time, '<', timedelta(days=7))
+
+        if not delta_time < timedelta(days=7):
+            message = 'The frequency of the habit should be less than a week'
             raise ValidationError(message)

@@ -28,6 +28,7 @@ django-cors-headers = "^4.3.1"
 flower = "^2.0.1"
 coverage = "^7.3.2"
 pytelegrambotapi = "^4.14.0"
+cron-converter = "^1.0.2"
 
 
 [build-system]

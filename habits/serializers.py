@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from habits.models import Habit
 from habits.validators import HabitDuration, HabitRelatedIsPleasant, HabitRewardOrRelatedIsPleasant, \
-    HabitRelatedOrIsPleasant
+    HabitRelatedOrIsPleasant, FrequencyLessOneWeek
 
 
 class HabitSerializer(serializers.ModelSerializer):
@@ -28,6 +28,8 @@ class HabitSerializer(serializers.ModelSerializer):
 
             HabitRelatedOrIsPleasant(
                 # queryset=Habit.objects.values_list('is_pleasant', 'related_habit', 'reward'),
-            )
+            ),
+
+            FrequencyLessOneWeek()
 
         ]
