@@ -19,7 +19,7 @@ class HabitAPITestCase(APITestCase):
             username='test_user',
             password='user@user.user',
             telegram_username='@test_user',
-            telegram_uid='5194882396',
+            telegram_uid='12345',
         )
 
         data = [
