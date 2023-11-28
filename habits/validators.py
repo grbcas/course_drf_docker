@@ -10,9 +10,10 @@ class HabitDuration:
 
     def __call__(self, value):
         # print(f'value ===== {value=}')
-        if value['duration'] > timedelta(seconds=120):
-            message = 'The execution time should be no more than 120 seconds.'
-            raise ValidationError(message)
+        if value.get('duration'):
+            if value['duration'] > timedelta(seconds=120):
+                message = 'The execution time should be no more than 120 seconds.'
+                raise ValidationError(message)
 
 
 class HabitRelatedIsPleasant:
@@ -20,11 +21,11 @@ class HabitRelatedIsPleasant:
 
     def __call__(self, value):
         try:
-            is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value['related_habit'])
-
-            if value['related_habit'] and not is_pleasant:
-                message = 'The related habit should be pleasant.'
-                raise ValidationError(message)
+            is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value.get('related_habit'))
+            if value.get('related_habit'):
+                if not is_pleasant:
+                    message = 'The related habit should be pleasant.'
+                    raise ValidationError(message)
 
         except ObjectDoesNotExist:
             print('habits.models.Habit.DoesNotExist: Habit matching query does not exist.')
@@ -37,8 +38,8 @@ class HabitRewardOrRelatedIsPleasant:
         # is_pleasant = Habit.objects.values_list('is_pleasant').get(operation=value['related_habit'])
         # reward = Habit.objects.values_list('reward')
 
-        related_habit = value['related_habit']
-        reward = value['reward']
+        related_habit = value.get('related_habit')
+        reward = value.get('reward')
         # print(related_habit, reward)
         if related_habit and reward:
             message = 'Simultaneous selection of the reward and related pleasant habit is excluded'
@@ -49,10 +50,12 @@ class HabitRelatedOrIsPleasant:
     """ checking a pleasant habit can't have a reward or a related habit """
 
     def __call__(self, value):
-        is_pleasant = value['is_pleasant']
-        related_habit = value['related_habit']
-        reward = value['reward']
-        # print(is_pleasant, related_habit, reward)
+        # is_pleasant = value['is_pleasant']
+        # related_habit = value['related_habit']
+        # reward = value['reward']
+        is_pleasant = value.get('is_pleasant')
+        related_habit = value.get('related_habit')
+        reward = value.get('reward')
 
         if is_pleasant and (related_habit or reward):
             message = 'A pleasant habit can\'t have a reward or a related habit'
@@ -63,25 +66,28 @@ class FrequencyLessOneWeek:
     """ checking frequency of the habit """
 
     def __call__(self, value):
-        crontab = value['task_crontab']
-        print('crontab', crontab)
-        crontab_str = ' '.join(crontab.values())
-        print('crontab_str', crontab_str)
-        cron_instance = Cron()
-        # Parse a string to init a schedule
-        cron_instance.from_string(crontab_str)
+        # crontab = value['task_crontab']
+        crontab = value.get('task_crontab')
 
-        # Raw datetime without timezone info (not aware)
-        reference = datetime.now()
-        # Get the iterator, initialised to now
-        schedule = cron_instance.schedule(reference)
+        if crontab:
+            crontab_str = ' '.join(crontab.values())
 
-        # Calls to .next()
-        next_time = schedule.next()
+            print('crontab_str', crontab_str)
+            cron_instance = Cron()
+            # Parse a string to init a schedule
+            cron_instance.from_string(crontab_str)
 
-        delta_time = next_time - reference
-        # print(next_time, 'delta_time = ', delta_time, '<', timedelta(days=7))
+            # Raw datetime without timezone info (not aware)
+            reference = datetime.now()
+            # Get the iterator, initialised to now
+            schedule = cron_instance.schedule(reference)
 
-        if not delta_time < timedelta(days=7):
-            message = 'The frequency of the habit should be less than a week'
-            raise ValidationError(message)
+            # Calls to .next()
+            next_time = schedule.next()
+
+            delta_time = next_time - reference
+            # print(next_time, 'delta_time = ', delta_time, '<', timedelta(days=7))
+
+            if not delta_time < timedelta(days=7):
+                message = 'The frequency of the habit should be less than a week'
+                raise ValidationError(message)
