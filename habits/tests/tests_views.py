@@ -36,6 +36,34 @@ class HabitAPITestCase(APITestCase):
 
         self.client.force_authenticate(user=self.user)
 
+    def test_habit_retrieve(self):
+        response = self.client.get(reverse('habits:habits_api-detail', str(self.habit.id)))
+        # print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertEqual(response.json(),
+                         {
+                             "id": self.habit.id,
+                             "place": "place",
+                             "operation": "operation",
+                             "schedule": 3,
+                             "task_crontab": {
+                                 "hour": "*",
+                                 "minute": "*/1",
+                                 "day_of_week": "*",
+                                 "day_of_month": "*",
+                                 "month_of_year": "*"
+                             },
+                             "duration": "00:00:03",
+                             "reward": None,
+                             "is_pleasant": True,
+                             "is_public": True,
+                             "user": self.user.pk,
+                             "related_habit": None,
+                             'task': None,
+        }
+        )
+
     def test_habit_create(self):
         data = {
             "place": "test",
@@ -62,7 +90,7 @@ class HabitAPITestCase(APITestCase):
 
         self.assertEqual(response.json(),
                          {
-                             "id": 2,
+                             "id": self.habit.id + 1,
                              "place": "test",
                              "operation": "test",
                              "schedule": 3,
@@ -83,46 +111,18 @@ class HabitAPITestCase(APITestCase):
         }
         )
 
-    def test_habit_retrieve(self):
-        response = self.client.get(reverse('habits:habits_api-detail', '1'))
-        # print(response.json())
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        self.assertEqual(response.json(),
-                         {
-                             "id": 1,
-                             "place": "place",
-                             "operation": "operation",
-                             "schedule": 3,
-                             "task_crontab": {
-                                 "hour": "*",
-                                 "minute": "*/1",
-                                 "day_of_week": "*",
-                                 "day_of_month": "*",
-                                 "month_of_year": "*"
-                             },
-                             "duration": "00:00:03",
-                             "reward": None,
-                             "is_pleasant": True,
-                             "is_public": True,
-                             "user": 1,
-                             "related_habit": None,
-                             'task': None,
-        }
-        )
-
     def test_habit_update(self):
         data = {
             "place": "test patch",
         }
 
-        response = self.client.patch(reverse('habits:habits_api-detail', '1'), data=data, format='json')
+        response = self.client.patch(reverse('habits:habits_api-detail', str(self.habit.id)), data=data, format='json')
         # print(response)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         self.assertEqual(response.json(),
                          {
-                             "id": 1,
+                             "id": self.habit.id,
                              "place": "test patch",
                              "operation": "operation",
                              "schedule": 3,
@@ -137,14 +137,14 @@ class HabitAPITestCase(APITestCase):
                              "reward": None,
                              "is_pleasant": True,
                              "is_public": True,
-                             "user": 1,
+                             "user": self.user.pk,
                              "related_habit": None,
                              'task': None,
         }
         )
 
     def test_habit_delete(self):
-        response = self.client.delete(reverse('habits:habits_api-detail', '2'))
+        response = self.client.delete(reverse('habits:habits_api-detail', str(self.habit.id)))
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
