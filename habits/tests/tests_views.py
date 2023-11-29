@@ -152,7 +152,7 @@ class HabitAPITestCase(APITestCase):
         response = self.client.get(reverse('habits:habits_api-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # print(response.json())
+        print(response.json())
         self.assertEqual(response.json(),
                          {
                              "count": 1,
@@ -160,7 +160,7 @@ class HabitAPITestCase(APITestCase):
                              "previous": None,
                              "results": [
                                  {
-                                     "id": 1,
+                                     "id": self.habit.id,
                                      "place": "place",
                                      "operation": "operation",
                                      "schedule": 3,
@@ -175,7 +175,7 @@ class HabitAPITestCase(APITestCase):
                                      "reward": None,
                                      "is_pleasant": True,
                                      "is_public": True,
-                                     "user": 1,
+                                     "user": self.user.pk,
                                      "task": None,
                                      "related_habit": None
                                  }

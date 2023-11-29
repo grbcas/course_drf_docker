@@ -26,6 +26,11 @@ class UserTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.json(), {'telegram_username': ["Invalid telegram nickname"]})
 
+    def test_user_registration_none_user(self):
+        """if user is not None:"""
+        response = self.client.post(self.url, data=None)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_user_registration(self):
 
         valid_data = {
