@@ -16,21 +16,22 @@ class HabitAPITestCase(APITestCase):
         )
 
         self.habit = Habit.objects.create(
-                place="place",
-                operation="operation",
-                schedule=3,
-                duration="00:00:03",
-                reward=None,
-                is_pleasant=True,
-                is_public=True,
-                related_habit=None,
-                task_crontab={
-                    'day_of_month': '*',
-                    'day_of_week': '*',
-                    'hour': '*',
-                    'minute': '*/1',
-                    'month_of_year': '*'},
-                user=self.user
+            place="place",
+            operation="operation",
+            schedule=3,
+            duration="00:00:03",
+            reward=None,
+            is_pleasant=True,
+            is_public=True,
+            related_habit=None,
+            task_crontab={
+                'day_of_month': '*',
+                'day_of_week': '*',
+                'hour': '*',
+                'minute': '*/1',
+                'month_of_year': '*'
+            },
+            user=self.user
         )
 
         self.client.force_authenticate(user=self.user)
@@ -79,8 +80,8 @@ class HabitAPITestCase(APITestCase):
                              "user": self.user.pk,
                              "related_habit": None,
                              'task': 1,
-                         }
-                         )
+        }
+        )
 
     def test_habit_retrieve(self):
         response = self.client.get(reverse('habits:habits_api-detail', '1'))
@@ -107,8 +108,8 @@ class HabitAPITestCase(APITestCase):
                              "user": 1,
                              "related_habit": None,
                              'task': None,
-                         }
-                         )
+        }
+        )
 
     def test_habit_update(self):
         data = {
@@ -139,8 +140,8 @@ class HabitAPITestCase(APITestCase):
                              "user": 1,
                              "related_habit": None,
                              'task': None,
-                         }
-                         )
+        }
+        )
 
     def test_habit_delete(self):
         response = self.client.delete(reverse('habits:habits_api-detail', '2'))
@@ -164,11 +165,11 @@ class HabitAPITestCase(APITestCase):
                                      "operation": "operation",
                                      "schedule": 3,
                                      "task_crontab": {
-                                                        'day_of_month': '*',
-                                                        'day_of_week': '*',
-                                                        'hour': '*',
-                                                        'minute': '*/1',
-                                                        'month_of_year': '*'
+                                         'day_of_month': '*',
+                                         'day_of_week': '*',
+                                         'hour': '*',
+                                         'minute': '*/1',
+                                         'month_of_year': '*'
                                      },
                                      "duration": "00:00:03",
                                      "reward": None,
@@ -179,8 +180,8 @@ class HabitAPITestCase(APITestCase):
                                      "related_habit": None
                                  }
                              ]
-                         }
-                         )
+        }
+        )
 
     def test_habit_validators(self):
         data = {
@@ -213,5 +214,5 @@ class HabitAPITestCase(APITestCase):
                                  "A pleasant habit can't have a reward or a related habit",
                                  "The frequency of the habit should be less than a week"
                              ]
-                         }
-                         )
+        }
+        )

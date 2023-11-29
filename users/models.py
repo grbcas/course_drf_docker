@@ -12,18 +12,19 @@ class User(AbstractUser):
     """
 
     telegram_username = models.CharField(
-                                        max_length=150,
-                                        unique=True,
-                                        validators=[TelegramNicknameValidator()],
-                                        verbose_name='Unique telegram username',
-                                        **NULLABLE
+        max_length=150,
+        unique=True,
+        validators=[TelegramNicknameValidator()],
+        verbose_name='Unique telegram username',
+        **NULLABLE
     )
 
-    telegram_uid = models.CharField(max_length=100,
-                                    unique=True,
-                                    verbose_name='Unique telegram chat id',
-                                    **NULLABLE
-                                    )
+    telegram_uid = models.CharField(
+        max_length=100,
+        unique=True,
+        verbose_name='Unique telegram chat id',
+        **NULLABLE
+    )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['telegram_uid']

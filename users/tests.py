@@ -1,10 +1,6 @@
-import sys
-from io import StringIO
-
 from django.core.management import call_command
 from django.test import TestCase
-from dotenv import load_dotenv
-from rest_framework import status, response
+from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 from django.test.client import Client
@@ -45,7 +41,7 @@ class UserTestCase(APITestCase):
             'username': 'user2',
             'telegram_username': '@user2',
             'telegram_uid': '2'
-            }
+        }
         )
 
 
@@ -53,7 +49,6 @@ class CreateAdminCommandTestCase(TestCase):
 
     def test_createadmin(self):
 
-        # load_dotenv()
         username = os.environ.get('ADMIN_USERNAME', 'admin')
         password = os.environ.get('ADMIN_PASSWORD', 'admin@admin.admin')
         call_command('createadmin')

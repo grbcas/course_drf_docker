@@ -1,7 +1,4 @@
-import logging
-
 from celery import shared_task
-from config.celery import app
 from habits.models import Habit
 import logging
 

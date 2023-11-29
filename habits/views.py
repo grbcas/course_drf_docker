@@ -1,4 +1,4 @@
-from django_celery_beat.models import PeriodicTask, CrontabSchedule, PeriodicTasks
+from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from pytz import timezone
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
@@ -9,7 +9,6 @@ from rest_framework.utils import json
 from habits.models import Habit
 from habits.permissions import IsOwner
 from habits.serializers import HabitSerializer
-from rest_framework.generics import ListAPIView
 
 
 class HabitPageNumberPagination(PageNumberPagination):

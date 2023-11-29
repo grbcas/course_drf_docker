@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 from django.core.management import BaseCommand
 
-from config.settings import BASE_DIR
 from users.models import User
 import os
 
@@ -24,4 +23,4 @@ class Command(BaseCommand):
         if created:
             user.set_password(os.getenv('ADMIN_PASSWORD', 'admin@admin.admin'))
             user.save()
-            return f'admin was created'
+            return f'{user.username} was created'
